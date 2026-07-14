@@ -15,9 +15,10 @@ def test_connection(request):
         # Create a Redis client using settings
         r = redis.Redis(
             host=settings.REDIS_HOST,
-            port=settings.REDIS_PORT,
-            db=settings.REDIS_DB,
-            password=settings.REDIS_PASSWORD
+            port=int(settings.REDIS_PORT),
+            db=int(settings.REDIS_DB),
+            password=settings.REDIS_PASSWORD or None,
+            ssl=True
         )
         # Ping the Redis server
         r.ping()
