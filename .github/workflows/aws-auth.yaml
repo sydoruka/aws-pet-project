@@ -4,6 +4,18 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        include:
+          - name: Redis
+            repository: bookstore/backend-redis
+            context: ./backend_redis
+          - name: Backend RDS
+            repository: bookstore/backend-rds
+            context: ./backend_rds
+          - name: Frontend
+            repository: bookstore/frontend
+            context: ./frontend
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -18,15 +30,14 @@ jobs:
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
-      
-      - name: Build, tag, and push image to Amazon ECR
+
+      - name: Build, tag, and push ${{ matrix.name }} image to Amazon ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: bookstore/backend-redis
+          ECR_REPOSITORY: ${{ matrix.repository }}
           IMAGE_TAG: latest
         run: |
-          # Build a docker container and push it to Amazon ECR
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ./backend_redis
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ${{ matrix.context }}
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
   # ✅ PLEASE USE THIS APPROACH INSTEAD!
