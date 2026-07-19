@@ -4,7 +4,7 @@ services:
     ports:
       - 8001:8000
     environment:
-      - DB_HOST=mydb.cpc2euucayz2.eu-north-1.rds.amazonaws.com
+      - DB_HOST=rds-postgres.cpc2euucayz2.eu-north-1.rds.amazonaws.com
       - DB_PORT=5432
       - DB_NAME=mydb
       - DB_USER=dbadmin
