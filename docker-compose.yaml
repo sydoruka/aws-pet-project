@@ -1,6 +1,6 @@
 services:
   backend-rds:
-    image: 951343843019.dkr.ecr.eu-north-1.amazonaws.com/bookstore/backend-rds:1.0
+    image: 951343843019.dkr.ecr.eu-north-1.amazonaws.com/bookstore/backend-rds:latest
     ports:
       - 8001:8000
     environment:
@@ -11,7 +11,7 @@ services:
       - DB_PASSWORD=password
 
   backend-redis:
-    image: 951343843019.dkr.ecr.eu-north-1.amazonaws.com/bookstore/backend-redis:1.0
+    image: 951343843019.dkr.ecr.eu-north-1.amazonaws.com/bookstore/backend-redis:latest
     ports:
       - 8002:8000
     environment:
@@ -21,7 +21,7 @@ services:
       - REDIS_PASSWORD=
 
   frontend:
-    image: 951343843019.dkr.ecr.eu-north-1.amazonaws.com/bookstore/frontend:1.0
+    image: 951343843019.dkr.ecr.eu-north-1.amazonaws.com/bookstore/frontend:latest
     ports:
       - 3000:8000
     environment:
