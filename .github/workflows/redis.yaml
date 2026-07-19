@@ -21,7 +21,7 @@ jobs:
 
       - name: Build, tag, and push Redis image to Amazon ECR
         env:
-          ECR_REGISTRY: bookstore/backend-redis
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: bookstore/backend-redis
           IMAGE_TAG: latest
         run: |
