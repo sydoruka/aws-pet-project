@@ -1,6 +1,15 @@
 name: Redis CI/CD
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'backend_redis/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'backend_redis/**'
 jobs:
   build-and-push:
     runs-on: ubuntu-24.04
