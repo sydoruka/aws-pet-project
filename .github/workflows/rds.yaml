@@ -28,7 +28,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-north-1
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
         
       - name: Login to Amazon ECR
         id: login-ecr
@@ -50,8 +50,8 @@ jobs:
           username: ec2-user
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-                aws ecr get-login-password --region eu-north-1 | \
-                docker login --username AWS --password-stdin 951343843019.dkr.ecr.eu-north-1.amazonaws.com
+                aws ecr get-login-password --region ${{ secrets.AWS_DEFAULT_REGION }} | \
+                docker login --username AWS --password-stdin ${{ secrets.ECR_REPOSITORY }}
                 cd /home/ec2-user
                 docker-compose pull backend-rds
                 docker-compose up -d backend-rds   
