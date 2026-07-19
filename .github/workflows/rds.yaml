@@ -14,6 +14,11 @@ on:
 jobs:
   deploy-rds-to-ecr:
     runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+          host:
+          - ${{ vars.EC2_HOST_1 }}
+          - ${{ vars.EC2_HOST_2 }}
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -41,15 +46,15 @@ jobs:
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1
         with:
-          host: ${{ secrets.EC2_HOST_1 }}
+          host: ${{ matrix.host }}
           username: ec2-user
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
                 aws ecr get-login-password --region eu-north-1 | \
                 docker login --username AWS --password-stdin 951343843019.dkr.ecr.eu-north-1.amazonaws.com
                 cd /home/ec2-user
-                docker-compose down
-                docker-compose up -d   
+                docker-compose pull backend-rds
+                docker-compose up -d backend-rds   
 
 
   # ✅ PLEASE USE THIS APPROACH INSTEAD!
