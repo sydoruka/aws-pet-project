@@ -57,7 +57,7 @@ jobs:
                 docker-compose up -d frontend  
 
 
-  # ✅ PLEASE USE THIS APPROACH INSTEAD!
+  # A better aws authorization method to implement in the future
 #   auth-to-aws-oidc:
 #     runs-on: ubuntu-24.04
 #     permissions:
